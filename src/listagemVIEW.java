@@ -1,5 +1,4 @@
 
-
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -14,7 +13,6 @@ public class listagemVIEW extends javax.swing.JFrame {
         PreencherTbl();
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -125,43 +123,63 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        String id = id_produto_venda.getText();
-        
-        ProdutosDAO produtosdao = new ProdutosDAO();
-        
-        //produtosdao.venderProduto(Integer.parseInt(id));
-        //listarProdutos();
+        venderProduto();
+        PreencherTbl();
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        //vendasVIEW vendas = new vendasVIEW(); 
-        //vendas.setVisible(true);
+        listagemVendidos vendidos = new listagemVendidos();
+        vendidos.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
     private void PreencherTbl() {
-    ProdutosDAO produtosdao = new ProdutosDAO();
-    boolean status = produtosdao.conectar();
-    if (!status) {
-        JOptionPane.showMessageDialog(null, "Erro de conexão");
-    } else {
-        List<ProdutosDTO> listaProdutos = produtosdao.listarProdutos();
-        DefaultTableModel model = (DefaultTableModel) tabelaProdutos.getModel();
-        model.setRowCount(0);
-        for (ProdutosDTO produto : listaProdutos) {
-            Object[] row = new Object[]{
-                produto.getId(),
-                produto.getNome(),
-                produto.getValor(),
-                produto.getStatus()
-            };
-            model.addRow(row);
+        ProdutosDAO produtosdao = new ProdutosDAO();
+        boolean status = produtosdao.conectar();
+        if (!status) {
+            JOptionPane.showMessageDialog(null, "Erro de conexão");
+        } else {
+            List<ProdutosDTO> listaProdutos = produtosdao.listarProdutos();
+            DefaultTableModel model = (DefaultTableModel) tabelaProdutos.getModel();
+            model.setRowCount(0);
+            for (ProdutosDTO produto : listaProdutos) {
+                Object[] row = new Object[]{
+                    produto.getId(),
+                    produto.getNome(),
+                    produto.getValor(),
+                    produto.getStatus()
+                };
+                model.addRow(row);
+            }
+            produtosdao.desconectar();
         }
-        produtosdao.desconectar();
     }
-}
+
+    private void venderProduto() {
+        String idProdutoTexto = id_produto_venda.getText();
+
+        try {
+            int idProduto = Integer.parseInt(idProdutoTexto);
+            ProdutosDAO produtosDAO = new ProdutosDAO();
+            boolean status = produtosDAO.conectar();
+
+            if (status) {
+                produtosDAO.venderProduto(idProduto);
+                produtosDAO.desconectar();
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro de conexão");
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Digite um ID válido");
+        }
+    }
+
+    public String getIdProdutoVenda() {
+        return id_produto_venda.getText();
+    }
 
     /**
      * @param args the command line arguments
@@ -211,6 +229,4 @@ public class listagemVIEW extends javax.swing.JFrame {
     private javax.swing.JTable tabelaProdutos;
     // End of variables declaration//GEN-END:variables
 
-    
-    
 }
