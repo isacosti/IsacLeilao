@@ -92,7 +92,7 @@ public class ProdutosDAO {
         }
     }
 
-    /*public List<ProdutosDTO> listarProdutosVendidos() {
+    public List<ProdutosDTO> listarProdutosVendidos() {
         String sql = "SELECT * FROM produtos WHERE status = 'Vendido'";
         try {
             PreparedStatement st = conn.prepareStatement(sql);
@@ -111,6 +111,6 @@ public class ProdutosDAO {
             System.out.println("Erro ao conectar: " + ex.getMessage());
             return null;
         }
-    }*/
+    }
 
 }

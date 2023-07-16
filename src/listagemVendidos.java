@@ -19,7 +19,7 @@ public class listagemVendidos extends javax.swing.JFrame {
      */
     public listagemVendidos() {
         initComponents();
-        //PreencherTbl();
+        PreencherTbl();
     }
 
     /**
@@ -98,7 +98,7 @@ public class listagemVendidos extends javax.swing.JFrame {
         listagem.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
-    /*private void PreencherTbl() {
+    private void PreencherTbl() {
     ProdutosDAO produtosdao = new ProdutosDAO();
     boolean status = produtosdao.conectar();
     if (!status) {
@@ -118,10 +118,9 @@ public class listagemVendidos extends javax.swing.JFrame {
         }
         produtosdao.desconectar();
     
-}
-    /**
-     * @param args the command line arguments
-     */
+    }
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
